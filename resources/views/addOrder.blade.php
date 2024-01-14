@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                   <form method="POST" action="/createOrder">
-                    <input name="user_id" type="text" placeholder="ID официанта"/>
+                    @csrf
                     <input name="table" type="text" placeholder="Номер стола"/>
                     <button type="submit">Создать</button>
                   </form>

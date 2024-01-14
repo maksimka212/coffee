@@ -11,6 +11,9 @@
                   ID пользователя: {{ $order->user_id }} <br>
                 </div>
                 <a href="/orders">Назад</a>
+                
+                    <a href="deleteOrder/{{ $order->id }}"><button>Удалить заказ</button></a>
+
             </div>
         </div>
     </div>

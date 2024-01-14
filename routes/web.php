@@ -34,6 +34,7 @@ Route::get('/orders', [OrdersController::class, 'showOrders'])->middleware(['aut
 Route::get('/orders/{id}', [OrdersController::class, 'showOrder'])->middleware(['auth', 'verified']);
 Route::get('/addOrder', function () { return view('addOrder'); });
 Route::post('/createOrder', [OrdersController::class, 'store']);
+Route::get('orders/deleteOrder/{id_order}', [OrdersController::class, 'delete']);
 
 Route::get('/products', function () {
     return view('products');

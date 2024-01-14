@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Order;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
@@ -14,19 +16,27 @@ class OrdersController extends Controller
     }
 
     public function showOrder($id) {    
-        $orders = DB::table('orders')->get();
-        return view('orderPage', ['order' => $orders[$id-1]]);
+        $order = DB::table('orders')->where('id', $id)->first();
+        return view('orderPage', ['order' => $order]);
     }
 
-    public function store($user_id, $table) {    
-        DB::table('orders')->insert([
-            'date' =>  date('y-m-d'),
-            'status' => 'Создан',
-            'time_create' => date('H:i:s'),
-            'user_id' => $user_id,
-            'table' => $table
-        ]);
-        
-        OrdersController::showOrders();
+
+    public function store(Request $request)
+    {
+        $Order = new Order;
+        $Order->user_id = Auth::user()->id;
+        $Order->time_create = date('H:i:s');
+        $Order->date = date('y-m-d');
+        $Order->table = $request->table;
+        $Order->save();
+
+        return redirect('/orders');
+    }
+
+
+    public function delete($id_order) {
+        DB::table('orders')->where('id', '=', $id_order)->delete();
+
+        return redirect('/orders');
     }
 }
